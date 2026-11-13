@@ -4,7 +4,6 @@ import com.mahra.reapersarsenal.item.WeaponType;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -15,24 +14,10 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 /**
  * Client-only visuals: a custom first-person attack animation per weapon type,
- * and a two-handed third-person grip for the long/heavy weapons.
+ * and a two-handed third-person grip (vanilla crossbow hold) for the long/heavy weapons.
  */
 public class WeaponClientExtensions implements IClientItemExtensions {
     private static final float PI = (float) Math.PI;
-
-    /** Both hands on the shaft, held diagonally in front of the body. */
-    private static final HumanoidModel.ArmPose TWO_HANDED = HumanoidModel.ArmPose.create(
-            "REAPERS_ARSENAL_TWO_HANDED", true, (model, entity, arm) -> {
-                boolean right = arm == HumanoidArm.RIGHT;
-                ModelPart main = right ? model.rightArm : model.leftArm;
-                ModelPart off = right ? model.leftArm : model.rightArm;
-                float side = right ? 1.0F : -1.0F;
-                float look = model.head.xRot * 0.4F;
-                main.xRot = -0.55F + look;
-                main.yRot = -0.15F * side;
-                off.xRot = -1.0F + look;
-                off.yRot = 0.6F * side;
-            });
 
     private final WeaponType type;
 
@@ -48,7 +33,8 @@ public class WeaponClientExtensions implements IClientItemExtensions {
     @Override
     public HumanoidModel.ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack stack) {
         if (hand == InteractionHand.MAIN_HAND && isTwoHanded()) {
-            return TWO_HANDED;
+            // Vanilla two-handed pose (no custom enum extension, which can crash on some setups).
+            return HumanoidModel.ArmPose.CROSSBOW_HOLD;
         }
         return null;
     }
