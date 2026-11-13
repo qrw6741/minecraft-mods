@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "PBP",
+    "BRB",
+    "PBP"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:packed_ice"
+    },
+    "B": {
+      "item": "minecraft:blue_ice"
+    },
+    "R": {
+      "item": "ashen_realms:royal_soul"
+    }
+  },
+  "result": {
+    "item": "ashen_realms:frozen_effigy"
+  }
+}

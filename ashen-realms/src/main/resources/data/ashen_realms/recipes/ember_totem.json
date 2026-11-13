@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [
+    "MBM",
+    "BFB",
+    "MBM"
+  ],
+  "key": {
+    "M": {
+      "item": "minecraft:magma_cream"
+    },
+    "B": {
+      "item": "minecraft:blaze_rod"
+    },
+    "F": {
+      "item": "ashen_realms:frost_soul"
+    }
+  },
+  "result": {
+    "item": "ashen_realms:ember_totem"
+  }
+}

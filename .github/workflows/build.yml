@@ -1,0 +1,70 @@
+name: Build mods
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mod: [reapers-arsenal, ashen-realms]
+    defaults:
+      run:
+        working-directory: ${{ matrix.mod }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.8'
+
+      - name: Build jar
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle build --stacktrace --no-daemon 2>&1 | tee build.log
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.mod }}
+          path: ${{ matrix.mod }}/build/libs/*.jar
+
+      - name: Report build failure
+        if: failure()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          { echo '```'; grep -n -B2 -A6 -E "error:|What went wrong|Could not|Exception" build.log | head -200; echo '---- tail ----'; tail -n 60 build.log; echo '```'; } > report.md || true
+          gh issue create --title "Build ${{ github.run_number }} failed: ${{ matrix.mod }}" --body-file report.md
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Mods build ${{ github.run_number }}
+          body: |
+            Minecraft 1.20.1 Forge (47.4.28).
+            Download the .jar files below and add them to your CurseForge modpack's mods folder.
+          files: dist/**/*.jar
+          make_latest: true

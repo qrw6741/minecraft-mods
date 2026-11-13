@@ -1,0 +1,6 @@
+{
+  "parent": "reapers_arsenal:item/large_handheld",
+  "textures": {
+    "layer0": "reapers_arsenal:item/golden_halberd"
+  }
+}

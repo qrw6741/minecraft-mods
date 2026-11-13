@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "reapers_arsenal:golden_scythe",
+    "reapers_arsenal:golden_katana",
+    "reapers_arsenal:golden_dagger",
+    "reapers_arsenal:golden_warhammer",
+    "reapers_arsenal:golden_spear",
+    "reapers_arsenal:golden_halberd"
+  ]
+}

@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="All Rights Reserved"
+
+[[mods]]
+modId="ashen_realms"
+version="1.0.0"
+displayName="Ashen Realms"
+authors="Mahra Almarzooqi"
+logoFile="logo.png"
+description='''
+An RPG adventure: three summonable bosses - the Hollow King, the Frost Colossus and the Ember Matriarch - each guarding a legendary weapon, plus new craftable weapons and staffs.
+'''
+
+[[dependencies.ashen_realms]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.ashen_realms]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"

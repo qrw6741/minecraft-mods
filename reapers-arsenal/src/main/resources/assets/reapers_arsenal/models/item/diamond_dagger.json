@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "reapers_arsenal:item/diamond_dagger"
+  }
+}
