@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CRC",
+    "FNE",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "ashen_expanse:cinderite_shard"
+    },
+    "R": {
+      "item": "ashen_realms:royal_soul"
+    },
+    "F": {
+      "item": "ashen_realms:frost_soul"
+    },
+    "E": {
+      "item": "ashen_realms:ember_soul"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "result": {
+    "item": "ashen_expanse:tyrant_sigil",
+    "count": 1
+  }
+}

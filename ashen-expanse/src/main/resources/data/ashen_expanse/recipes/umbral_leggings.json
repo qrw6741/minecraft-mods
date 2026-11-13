@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "MMM",
+    "M M",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "ashen_expanse:umbral_ingot"
+    }
+  },
+  "result": {
+    "item": "ashen_expanse:umbral_leggings",
+    "count": 1
+  }
+}

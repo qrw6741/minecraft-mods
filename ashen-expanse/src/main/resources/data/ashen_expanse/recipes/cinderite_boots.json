@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "M M",
+    "M M"
+  ],
+  "key": {
+    "M": {
+      "item": "ashen_expanse:cinderite_shard"
+    }
+  },
+  "result": {
+    "item": "ashen_expanse:cinderite_boots",
+    "count": 1
+  }
+}

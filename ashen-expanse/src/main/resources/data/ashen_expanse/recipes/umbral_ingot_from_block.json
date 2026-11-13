@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ashen_expanse:umbral_block"
+    }
+  ],
+  "result": {
+    "item": "ashen_expanse:umbral_ingot",
+    "count": 9
+  }
+}

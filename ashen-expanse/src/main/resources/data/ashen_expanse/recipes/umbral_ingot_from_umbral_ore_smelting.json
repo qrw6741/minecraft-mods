@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "ashen_expanse:umbral_ore"
+  },
+  "result": "ashen_expanse:umbral_ingot",
+  "experience": 1.0,
+  "cookingtime": 200
+}

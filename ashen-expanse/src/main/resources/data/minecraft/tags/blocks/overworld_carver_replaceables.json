@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "ashen_expanse:ashstone",
+    "ashen_expanse:ash_block",
+    "minecraft:blackstone",
+    "minecraft:soul_soil",
+    "minecraft:soul_sand"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "ashen_expanse:ashstone"
+    }
+  },
+  "result": {
+    "item": "ashen_expanse:ashstone_bricks",
+    "count": 4
+  }
+}

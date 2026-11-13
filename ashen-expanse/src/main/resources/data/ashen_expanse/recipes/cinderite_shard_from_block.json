@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "ashen_expanse:cinderite_block"
+    }
+  ],
+  "result": {
+    "item": "ashen_expanse:cinderite_shard",
+    "count": 9
+  }
+}

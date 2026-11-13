@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CMC",
+    "CSC",
+    " S "
+  ],
+  "key": {
+    "C": {
+      "item": "ashen_expanse:cinderite_shard"
+    },
+    "M": {
+      "item": "minecraft:magma_block"
+    },
+    "S": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "item": "ashen_expanse:magma_maul",
+    "count": 1
+  }
+}

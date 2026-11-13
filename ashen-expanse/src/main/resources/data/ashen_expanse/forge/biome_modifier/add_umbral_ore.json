@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "ashen_expanse:ore_umbral_overworld",
+  "step": "underground_ores"
+}

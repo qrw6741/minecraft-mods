@@ -1,4 +1,4 @@
-name: Build mods
+name: Build and test mods
 
 on:
   push:
@@ -12,13 +12,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        mod: [reapers-arsenal, ashen-realms]
-    defaults:
-      run:
-        working-directory: ${{ matrix.mod }}
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -31,40 +25,59 @@ jobs:
         with:
           gradle-version: '8.8'
 
-      - name: Build jar
+      - name: Build and test
         shell: bash
         run: |
-          set -o pipefail
-          gradle build --stacktrace --no-daemon 2>&1 | tee build.log
+          mkdir -p logs
+          status=0
+          step() {  # name, folder, gradle task
+            echo "::group::$1"
+            ( cd "$2" && timeout 1200 gradle "$3" --stacktrace --no-daemon ) > "logs/$1.log" 2>&1
+            local rc=$?
+            if [ "$3" = runGameTestServer ] && grep -qE "required tests failed|test.*failed|Exception in server tick loop|Crash report" "logs/$1.log"; then rc=1; fi
+            echo "exit=$rc"; tail -n 40 "logs/$1.log"; echo "::endgroup::"
+            if [ $rc -ne 0 ]; then echo "$1" >> logs/FAILED; status=1; fi
+          }
+          step build-reapers reapers-arsenal build
+          step build-ashen   ashen-realms    build
+          step build-expanse ashen-expanse   build
+          step test-reapers  reapers-arsenal runGameTestServer
+          step test-ashen    ashen-realms    runGameTestServer
+          step test-expanse  ashen-expanse   runGameTestServer
+          mkdir -p dist && cp */build/libs/*.jar dist/ 2>/dev/null || true
+          exit $status
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.mod }}
-          path: ${{ matrix.mod }}/build/libs/*.jar
-
-      - name: Report build failure
+      - name: Report failure
         if: failure()
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          { echo '```'; grep -n -B2 -A6 -E "error:|What went wrong|Could not|Exception" build.log | head -200; echo '---- tail ----'; tail -n 60 build.log; echo '```'; } > report.md || true
-          gh issue create --title "Build ${{ github.run_number }} failed: ${{ matrix.mod }}" --body-file report.md
+          {
+            echo "Failed steps: $(cat logs/FAILED 2>/dev/null | tr '\n' ' ')"
+            for f in $(cat logs/FAILED 2>/dev/null); do
+              echo; echo "## $f"; echo '```'
+              grep -n -B2 -A8 -E "error:|What went wrong|FAILED|failed|Exception|Caused by|Crash" "logs/$f.log" | head -250
+              echo '---- tail ----'; tail -n 40 "logs/$f.log"; echo '```'
+            done
+          } > report.md
+          gh issue create --title "Build ${{ github.run_number }} failed" --body-file report.md
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          path: dist
+          name: logs
+          path: logs/
 
-      - uses: softprops/action-gh-release@v2
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
           name: Mods build ${{ github.run_number }}
           body: |
-            Minecraft 1.20.1 Forge (47.4.28).
-            Download the .jar files below and add them to your CurseForge modpack's mods folder.
-          files: dist/**/*.jar
+            Minecraft 1.20.1 Forge (47.4.28). All three mods compiled and passed the in-game smoke tests.
+            Download the .jar files and add them to your CurseForge modpack's mods folder.
+            Ashen Expanse requires Ashen Realms.
+          files: dist/*.jar
           make_latest: true

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "UEU",
+    "UPU",
+    "UUU"
+  ],
+  "key": {
+    "U": {
+      "item": "ashen_expanse:umbral_ingot"
+    },
+    "E": {
+      "item": "ashen_realms:ember_soul"
+    },
+    "P": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "ashen_expanse:ashen_waystone",
+    "count": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "ashen_expanse:ashstone",
+    "ashen_expanse:ashstone_bricks",
+    "ashen_expanse:umbral_ore",
+    "ashen_expanse:deepslate_umbral_ore",
+    "ashen_expanse:cinderite_ore",
+    "ashen_expanse:umbral_block",
+    "ashen_expanse:cinderite_block"
+  ]
+}
