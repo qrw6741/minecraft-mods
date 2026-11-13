@@ -45,6 +45,17 @@ jobs:
           step test-ashen    ashen-realms    runGameTestServer
           step test-expanse  ashen-expanse   runGameTestServer
           mkdir -p dist && cp */build/libs/*.jar dist/ 2>/dev/null || true
+          {
+            echo "Minecraft 1.20.1 Forge (47.4.28). Add the .jar files to your CurseForge modpack's mods folder."
+            echo "Ashen Expanse requires Ashen Realms."
+            echo
+            echo "### In-game smoke test results"
+            for t in test-reapers test-ashen test-expanse; do
+              echo "**$t**"; echo '```'
+              grep -hE "GAME TESTS COMPLETE|required tests|test.*(passed|failed)|Ashlands chunk|optional tests" "logs/$t.log" | sed 's/^.*\] //' | head -40
+              echo '```'
+            done
+          } > logs/summary.md
           exit $status
 
       - name: Report failure
@@ -75,9 +86,6 @@ jobs:
         with:
           tag_name: build-${{ github.run_number }}
           name: Mods build ${{ github.run_number }}
-          body: |
-            Minecraft 1.20.1 Forge (47.4.28). All three mods compiled and passed the in-game smoke tests.
-            Download the .jar files and add them to your CurseForge modpack's mods folder.
-            Ashen Expanse requires Ashen Realms.
+          body_path: logs/summary.md
           files: dist/*.jar
           make_latest: true
